@@ -1,34 +1,26 @@
-import json 
-from dotenv import load_dotenv
-load_dotenv()
+from newsapi import NewsApiClient
+import pandas as pd
 
-import requests
-from newspaper import Article
+# Init
+newsapi = NewsApiClient(api_key='API-KEY')
 
-headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36'
-}
+# top-headlines
+top_headlines = newsapi.get_everything(q='Indian Stock Market',
+                                       from_param='2024-12-24',
+                                       to='2024-12-26',
+                                       sort_by='popularity',
+                                       page_size=2)
 
-article_urls = ['https://www.thehindubusinessline.com/markets/indian-markets-are-less-dependent-on-fpi-flows-vallum-capital-ceo/article69018830.ece',
-       'https://www.thehindubusinessline.com/markets/share-market-nifty-sensex-highlights-26-december-2024/article69025963.ece']
-article_titles=[]
-article_content=[]
-session = requests.Session()
 
-for article_url in article_urls:
-    try:
-        response = session.get(article_url, headers=headers, timeout=60)
-        
-        if response.status_code == 200:
-            article = Article(article_url)
-            article.download()
-            article.parse()
-            article_titles.append(article.title)
-            article_content.append(article.text)
-            print(f"Title: {article.title}")
-            print(f"Text: {article.text}")
-            
-        else:
-            print(f"Failed to fetch article at {article_url}")
-    except Exception as e:
-        print(f"Error occurred while fetching article at {article_url}: {e}")
+
+def get_links(data):
+    import pandas as pd
+    articles=data['articles']
+    df=pd.DataFrame(articles)
+    df[['source_id', 'source_name']] = df['source'].apply(pd.Series)
+    df['publishedAt'] = pd.to_datetime(df['publishedAt'], format='%Y-%m-%dT%H:%M:%SZ')
+    df=df.drop(labels='source',axis=1)
+    newws_links=data1['url'].to_numpy()
+    return newws_links
+
+data1=get_links(top_headlines)
