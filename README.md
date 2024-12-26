@@ -82,7 +82,7 @@ The Daily Bugle
 
 - **Automated Email Pipeline**: The next step is to create a pipeline that automatically sends the daily newsletters to subscribers via email using SMTP or other email services.
 - **Personalized Content**: Future versions will allow tailoring the newsletter to individual preferences based on market segments and interests.
-
+-**Agent Driven**: Plan on using agents to scrape more related data, focussing specific aspects of stock markets like rate cuts and dollar index.
 ### Acknowledgments
 
 - [NewsAPI](https://newsapi.org/) for providing access to global news sources.
